@@ -60,7 +60,7 @@ class App extends Component {
       firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/hasClickedBefore`)
         .set(true)
         .then(() => firebase.database().ref('/votes/').push({ rating: this.state.rating, parere: this.state.input })
-          .then(() => this.setState({ success: true, showGraph: true,showContent:false })))
+          .then(() => this.setState({ success: true, showGraph: true, showContent: true })))
 
   }
 
@@ -102,7 +102,7 @@ class App extends Component {
               {
                 this.state.showGraph === true ?
                   <div>
-                    <h1>Media notelor telespectatorilor este </h1><h1 style={{ fontWeight: 'bold' }}>{this.state.sentRating}/5.0</h1>
+                    <h1>Media notelor telespectatorilor este </h1><h1 style={{ fontWeight: 'bold' }}>{this.state.sentRating.toFixed(2)}/5.00</h1>
                     <StarRatings
                       rating={this.state.sentRating}
                       starRatedColor="blue"
@@ -111,9 +111,11 @@ class App extends Component {
                     />
                   </div>
                   : null
-              }</div> : <div><h3>Stim ca ti-a placut si doresti sa mai votezi odata dar nu permitem asta. In schimb poti viziona media notelor!</h3>
+              }</div> : <div>
+              <h3>Stim ca ti-a placut si doresti sa mai votezi odata dar nu permitem asta. In schimb poti viziona media notelor!</h3>
+              <h1>Media notelor telespectatorilor este </h1><h1 style={{ fontWeight: 'bold' }}>{this.state.sentRating.toFixed(2)}/5.00</h1>
               <StarRatings
-                rating={this.state.sentRating||0}
+                rating={this.state.sentRating || 0}
                 starRatedColor="blue"
                 starDimension="50px"
                 numberOfStars={5}
